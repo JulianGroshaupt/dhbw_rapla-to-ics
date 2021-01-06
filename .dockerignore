@@ -1,0 +1,6 @@
+.dockerignore
+Dockerfile
+target/
+.rusty-hook.toml
+.env
+ics_files/
