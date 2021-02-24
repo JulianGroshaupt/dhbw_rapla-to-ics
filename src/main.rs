@@ -2,7 +2,6 @@ use dotenv::dotenv;
 use ics::properties::{DtEnd, DtStart, Location, Organizer, Summary};
 use ics::{escape_text, Event, ICalendar, Standard, TimeZone};
 use log::{debug, info};
-use nanoid::nanoid;
 use scraper::{Html, Selector};
 use std::env;
 use std::fs;
@@ -232,8 +231,15 @@ async fn main() {
     ));
 
     for event in events {
-        // generate uniqe id
-        let id = nanoid!();
+        // construct event id
+        let id = format!(
+            "{}_{}_{}-{}@course-{}.dhbw-stuttgart.de",
+            event.name.replace(" ", "-"),
+            event.date.replace(".", "-"),
+            event.start_time.replace(":", ""),
+            event.end_time.replace(":", ""),
+            course
+        );
 
         // date formatted
         let mut date_vec: Vec<_> = event.date.split(".").collect();
