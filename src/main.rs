@@ -254,7 +254,7 @@ async fn main() {
         // construct event id
         let id = format!(
             "{}_{}_{}-{}@course-{}.dhbw-stuttgart.de",
-            event.name.replace(" ", "-"),
+            event.name.replace(" ", "-").replace(",", ""),
             event.date.replace(".", "-"),
             event.start_time.replace(":", ""),
             event.end_time.replace(":", ""),
