@@ -36,7 +36,6 @@ docker run --rm \
 | RAPLA_URL (required)        | the url to your rapla timetable (without parameters like _&day_, _&month_, _&year_ or _&today_)                                                             |
 | RAPLA_START_YEAR (required) | which year to start parsing events from                                                                                                                     |
 | RAPLA_COURSE                | the description of your course (if unset the script tries to get it from the timetable (h2 below the date selector) and will fail if this was not possible) |
-| RUST_LOG                    | the log level (you might find further information [here](https://docs.rs/env_logger/0.8.2/env_logger/#enabling-logging))                                    |
 
 ### volumes
 
