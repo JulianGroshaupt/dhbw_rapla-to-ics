@@ -208,33 +208,36 @@ async fn main() {
                     }
                     let event_lecturers = event_lecturers_vec.join(" & ");
 
-                    // log fetched values
-                    info!(
-                        "{}: event found: {}{} at {} from {} to {} with {}",
-                        r#type,
-                        event_name,
-                        if event_is_exam { " (exam)" } else { "" },
-                        event_date,
-                        event_start_time,
-                        event_end_time,
-                        if !event_lecturers.is_empty() {
-                            event_lecturers.clone()
-                        } else {
-                            "n/a".to_string()
-                        },
-                    );
+                    // do not use event if some values are missing
+                    if !(event_date.is_empty()) {
+                        // log fetched values
+                        info!(
+                            "{}: event found: {}{} at {} from {} to {} with {}",
+                            r#type,
+                            event_name,
+                            if event_is_exam { " (exam)" } else { "" },
+                            event_date,
+                            event_start_time,
+                            event_end_time,
+                            if !event_lecturers.is_empty() {
+                                event_lecturers.clone()
+                            } else {
+                                "n/a".to_string()
+                            },
+                        );
 
-                    // create Event and push to events-vec
-                    let event = DHBWEvent {
-                        name: event_name,
-                        date: event_date,
-                        start_time: event_start_time,
-                        end_time: event_end_time,
-                        location: String::new(),
-                        lecturer: event_lecturers,
-                        is_exam: event_is_exam,
-                    };
-                    events.push(event);
+                        // create event and push to events-vec
+                        let event = DHBWEvent {
+                            name: event_name,
+                            date: event_date,
+                            start_time: event_start_time,
+                            end_time: event_end_time,
+                            location: String::new(),
+                            lecturer: event_lecturers,
+                            is_exam: event_is_exam,
+                        };
+                        events.push(event);
+                    }
                 }
             }
         }
