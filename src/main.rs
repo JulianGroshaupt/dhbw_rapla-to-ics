@@ -144,6 +144,7 @@ async fn main() {
                     let event_weekday = event_times_vec.get(0).unwrap().to_string();
 
                     // get date
+                    // notice: this is not working for the "Klausuren"-placeholder-dates because they do not have the event_weekday part in their event_times_string
                     let mut event_date = String::new();
                     for week_header in
                         document.select(&Selector::parse("td.week_header nobr").unwrap())
@@ -161,18 +162,31 @@ async fn main() {
                     }
 
                     // get times
-                    let event_start_time;
-                    let event_end_time;
-                    let event_start_end_time_vec: Vec<_>;
-                    if event_times_vec.get(1).unwrap().contains("-") {
-                        event_start_end_time_vec =
-                            event_times_vec.get(1).unwrap().split("-").collect();
-                    } else {
-                        event_start_end_time_vec =
-                            event_times_vec.get(2).unwrap().split("-").collect();
+                    let mut event_start_time = String::new();
+                    let mut event_end_time = String::new();
+
+                    // try to get event times from every "part" of the event_start_end_time_vec
+                    for event_times in event_times_vec {
+                        if event_times.contains("-") {
+                            // get start and end times
+                            let event_start_end_time_vec: Vec<_> = event_times.split("-").collect();
+
+                            // set start and end times
+                            event_start_time = event_start_end_time_vec.get(0).unwrap().to_string();
+                            event_end_time = event_start_end_time_vec.get(1).unwrap().to_string();
+
+                            break;
+                        }
                     }
-                    event_start_time = event_start_end_time_vec.get(0).unwrap().to_string();
-                    event_end_time = event_start_end_time_vec.get(1).unwrap().to_string();
+
+                    // exit if start- / end-time is empty
+                    if event_start_time.is_empty() || event_end_time.is_empty() {
+                        println!(
+                            "Unable to get the start- / end-time for the event '{}' on {}. It looks like the entry in rapla does not match the expected format",
+                            event_name, event_date
+                        );
+                        return;
+                    }
 
                     // get lecturer
                     let mut event_lecturer = String::new();
