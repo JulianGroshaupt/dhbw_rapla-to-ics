@@ -1,6 +1,6 @@
 [package]
 name = "dhbw_rapla-to-ics"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Julian Groshaupt <mail@julian-groshaupt.de>"]
 edition = "2018"
 
