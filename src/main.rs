@@ -189,18 +189,24 @@ async fn main() {
                     }
 
                     // get lecturer
-                    let mut event_lecturer = String::new();
-                    let lecturer = week_block
-                        .select(&Selector::parse("span.person").unwrap())
-                        .next();
-                    if lecturer.is_some() && !event_is_exam {
-                        event_lecturer = lecturer.unwrap().inner_html();
-                        // remove trailing ,
-                        if event_lecturer.ends_with(",") {
-                            event_lecturer =
-                                event_lecturer[..(event_lecturer.len() - 1)].to_string();
+                    let mut event_lecturers_vec: Vec<String> = Vec::new();
+                    let lecturers_selector = &Selector::parse("span.person").unwrap();
+                    let lecturers = week_block.select(lecturers_selector);
+                    for lecturer in lecturers {
+                        if !event_is_exam {
+                            let mut event_lecturer = lecturer.inner_html();
+
+                            // remove trailing ,
+                            if event_lecturer.ends_with(",") {
+                                event_lecturer =
+                                    event_lecturer[..(event_lecturer.len() - 1)].to_string();
+                            }
+
+                            // add lecturer to lecturers list
+                            event_lecturers_vec.push(event_lecturer);
                         }
                     }
+                    let event_lecturers = event_lecturers_vec.join(" & ");
 
                     // log fetched values
                     info!(
@@ -211,8 +217,8 @@ async fn main() {
                         event_date,
                         event_start_time,
                         event_end_time,
-                        if !event_lecturer.is_empty() {
-                            event_lecturer.clone()
+                        if !event_lecturers.is_empty() {
+                            event_lecturers.clone()
                         } else {
                             "n/a".to_string()
                         },
@@ -225,7 +231,7 @@ async fn main() {
                         start_time: event_start_time,
                         end_time: event_end_time,
                         location: String::new(),
-                        lecturer: event_lecturer,
+                        lecturer: event_lecturers,
                         is_exam: event_is_exam,
                     };
                     events.push(event);
