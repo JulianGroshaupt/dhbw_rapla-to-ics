@@ -7,7 +7,7 @@ use std::env;
 use std::fs;
 
 #[allow(dead_code)]
-struct DHBWEvent {
+struct DhbwEvent {
     name: String,
     date: String,
     start_time: String,
@@ -49,7 +49,7 @@ async fn main() {
     }
 
     let mut last_week_number = String::new();
-    let mut events: Vec<DHBWEvent> = Vec::new();
+    let mut events: Vec<DhbwEvent> = Vec::new();
 
     // start reading events from rapla
     for y in start_year..(start_year + 3 + 1) {
@@ -227,7 +227,7 @@ async fn main() {
                         );
 
                         // create event and push to events-vec
-                        let event = DHBWEvent {
+                        let event = DhbwEvent {
                             name: event_name,
                             date: event_date,
                             start_time: event_start_time,
