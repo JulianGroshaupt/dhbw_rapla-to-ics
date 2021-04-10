@@ -138,7 +138,7 @@ async fn main() {
                         .nth(1)
                         .unwrap()
                         .inner_html();
-                    let event_times_vec: Vec<_> = event_times_string.split(" ").collect();
+                    let event_times_vec: Vec<_> = event_times_string.split(' ').collect();
 
                     // get weekday
                     let event_weekday = event_times_vec.get(0).unwrap().to_string();
@@ -167,9 +167,9 @@ async fn main() {
 
                     // try to get event times from every "part" of the event_start_end_time_vec
                     for event_times in event_times_vec {
-                        if event_times.contains("-") {
+                        if event_times.contains('-') {
                             // get start and end times
-                            let event_start_end_time_vec: Vec<_> = event_times.split("-").collect();
+                            let event_start_end_time_vec: Vec<_> = event_times.split('-').collect();
 
                             // set start and end times
                             event_start_time = event_start_end_time_vec.get(0).unwrap().to_string();
@@ -197,7 +197,7 @@ async fn main() {
                             let mut event_lecturer = lecturer.inner_html();
 
                             // remove trailing ,
-                            if event_lecturer.ends_with(",") {
+                            if event_lecturer.ends_with(',') {
                                 event_lecturer =
                                     event_lecturer[..(event_lecturer.len() - 1)].to_string();
                             }
@@ -265,7 +265,7 @@ async fn main() {
         );
 
         // date formatted
-        let mut date_vec: Vec<_> = event.date.split(".").collect();
+        let mut date_vec: Vec<_> = event.date.split('.').collect();
         date_vec.reverse();
         let date = date_vec.join("");
 
