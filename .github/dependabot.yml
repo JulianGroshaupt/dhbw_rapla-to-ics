@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: "/"
+    schedule:
+      interval: daily
+      timezone: "Europe/Berlin"
+    assignees:
+      - "JulianGroshaupt"
+    reviewers:
+      - "JulianGroshaupt"
+    target-branch: "dev"
